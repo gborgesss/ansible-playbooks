@@ -1,0 +1,29 @@
+---
+- name: Tarefas Comuns
+  hosts: meuservidor
+  become: yes
+
+  tasks:
+    - name: Instalar pacotes essenciais
+      apt:
+        name:
+          - pacote1
+          - pacote2
+        state: present
+
+    - name: Criar um usuário para acesso
+      user:
+        name: usuario
+        state: present
+        generate_ssh_key: yes
+
+    - name: Configuração de segurança
+      lineinfile:
+        dest: /etc/ssh/sshd_config
+        line: "PermitRootLogin no"
+        insertafter: "^#PermitRootLogin"
+        state: present
+
+    - name: Definir um nome para o servidor
+      hostname:
+        name: nome_do_servidor
